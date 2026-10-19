@@ -1,0 +1,26 @@
+package com.xworks.inventoryManagement.repository.impl;
+
+import com.xworks.inventoryManagement.entity.RegisterEntity;
+import com.xworks.inventoryManagement.repository.RegisterRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Repository
+public class RegisterRepositoryImpl implements RegisterRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    @Transactional
+    public boolean save(RegisterEntity registerEntity) {
+        if(registerEntity != null){
+            entityManager.persist(registerEntity);
+            return true;
+        }
+        return false;
+    }
+}
