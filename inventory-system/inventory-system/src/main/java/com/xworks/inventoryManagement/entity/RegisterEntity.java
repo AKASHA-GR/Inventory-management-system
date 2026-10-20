@@ -1,18 +1,11 @@
 package com.xworks.inventoryManagement.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import javax.persistence.*;
 
 @Data
-@Getter
-@Setter
-@ToString
 @Entity
-@Table(name = "register")
+@Table(name = "Users")
 public class RegisterEntity {
 
     @Id
@@ -28,9 +21,9 @@ public class RegisterEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private Long phoneNumber;
+    @Column(name = "phoneNumber", nullable = false, length = 10)
+    private String phoneNumber;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 100) // Increased for secure hashing
     private String password;
 }

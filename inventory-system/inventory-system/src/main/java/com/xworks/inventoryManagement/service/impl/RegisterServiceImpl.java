@@ -14,12 +14,20 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private RegisterRepository registerRepository;
 
+    public RegisterServiceImpl(){
+        System.out.println("The RegisterServiceImpl is created.");
+    }
+
+
     @Override
     public boolean validateAndSave(RegisterDTO registerDTO) {
         if(registerDTO != null){
+            System.out.println("DTO received: " + registerDTO);
             RegisterEntity registerEntity = new RegisterEntity();
             BeanUtils.copyProperties(registerDTO,registerEntity);
-            return registerRepository.save(registerEntity);
+            System.out.println("Entity before save: " + registerEntity);
+            registerRepository.save(registerEntity);
+            return true;
         }
         return false;
     }

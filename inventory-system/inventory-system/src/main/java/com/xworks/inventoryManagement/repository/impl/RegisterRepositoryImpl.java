@@ -11,6 +11,10 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class RegisterRepositoryImpl implements RegisterRepository {
 
+    public RegisterRepositoryImpl(){
+        System.out.println("The RegisterRepositoryImpl is created.");
+    }
+
     @PersistenceContext
     private EntityManager entityManager;
 

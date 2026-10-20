@@ -1,38 +1,30 @@
 package com.xworks.inventoryManagement.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import javax.validation.constraints.*;
 
 @Data
-@Getter
-@Setter
-@ToString
 public class RegisterDTO {
-    @NotBlank
-    @Size(min = 3,max = 10,message = "The name should be 3 to 10 character")
+    @NotBlank(message = "First name is required")
+    @Size(min = 3, max = 10, message = "The first name should be 3 to 10 characters")
     private String firstName;
 
-    @NotBlank
-    @Size(min = 1,max = 10,message = "The name should be 1 to 10 character")
+    @NotBlank(message = "Last name is required")
+    @Size(min = 1, max = 10, message = "The last name should be 1 to 10 characters")
     private String lastName;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
-    @NotNull
-    @Min(value = 10, message = "The phoneNumber is must have 10 number")
-    private Long phoneNumber;
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be exactly 10 digits")
+    private String phoneNumber;
 
-    @NotBlank
-    @Size(min = 3,max = 10,message = "The name should be 3 to 10 character")
+    @NotBlank(message = "Password is required")
+    @Size(min = 3, max = 20, message = "The password should be 3 to 20 characters")
     private String password;
 
-    @NotBlank
-    @Size(min = 3,max = 10,message = "The name should be 3 to 10 character")
+    @NotBlank(message = "Confirm password is required")
     private String confirmPassword;
 }

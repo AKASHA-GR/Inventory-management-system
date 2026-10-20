@@ -25,33 +25,40 @@ public class DatabaseConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/inventory_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/inventory_system_db");
         dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setPassword("Akasha@123");
         return dataSource;
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-        emf.setDataSource(dataSource());
-        emf.setPackagesToScan("com.xworks.inventoryManagement.entity");
-        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        
-        Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        jpaProperties.put("hibernate.show_sql", "true");
-        emf.setJpaProperties(jpaProperties);
-        
-        return emf;
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        System.out.println("The entityManagerFactory() method is called\n");
+        LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        localContainerEntityManagerFactoryBean.setDataSource(dataSource);
+        localContainerEntityManagerFactoryBean.setPackagesToScan("com.xworks.inventoryManagement.entity");
+        localContainerEntityManagerFactoryBean.setJpaProperties(hibernateProperties());
+        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        return localContainerEntityManagerFactoryBean;
+    }
+
+
+
+    @Bean
+    public Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.show_sql", true);
+        properties.put("hibernate.format_sql", true);
+        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
+        return properties;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(emf);
-        return transactionManager;
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        System.out.println("The transactionManager() method is called\n");
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
+        return jpaTransactionManager;
     }
 
 }
