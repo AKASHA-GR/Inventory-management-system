@@ -30,14 +30,13 @@ public class RegisterController {
         return "Register";
     }
 
-    @PostMapping("register")
+    @PostMapping("registered")
     public String register(Model model, @Valid RegisterDTO registerDTO, BindingResult bindingResult){
         System.out.println("The register method is created to save the customer");
         if(bindingResult.hasErrors()){
             System.out.println("There is a validation error, please fix the error ");
             List<ObjectError> errors = bindingResult.getAllErrors();
             model.addAttribute("validationErrors", errors);
-            return "Register";
         }else{
             System.out.println("There is no validation error,please continue the execute the service");
             registerService.validateAndSave(registerDTO);

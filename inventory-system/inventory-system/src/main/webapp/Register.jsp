@@ -7,20 +7,8 @@
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100">
 
-    <form action="register" method="post" class="w-50 ratio-4x3 border p-4 rounded" onsubmit="return validateForm()">
+    <form action="registered" method="post" class="w-50 ratio-4x3 border p-4 rounded" onsubmit="return validateForm()">
         <h1 class="d-flex justify-content-center align-items-center">Sign Up</h1>
-        
-        <c:if test="${not empty message}">
-            <div class="alert alert-success">${message}</div>
-        </c:if>
-        
-        <c:if test="${not empty validationErrors}">
-            <div class="alert alert-danger">
-                <c:forEach items="${validationErrors}" var="error">
-                    <p>${error.defaultMessage}</p>
-                </c:forEach>
-            </div>
-        </c:if>
         
         <div>
             <label for="firstName" class="form-label">First Name:</label>
@@ -50,6 +38,18 @@
             <button type="submit" class="btn btn-primary w-100">Register</button>
         </div><br>
     </form>
+
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">${message}</div>
+    </c:if>
+
+    <c:if test="${not empty validationErrors}">
+        <div class="alert alert-danger">
+            <c:forEach items="${validationErrors}" var="error">
+                <p>${error.defaultMessage}</p>
+            </c:forEach>
+        </div>
+    </c:if>
 
     <script src="RegisterValidation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

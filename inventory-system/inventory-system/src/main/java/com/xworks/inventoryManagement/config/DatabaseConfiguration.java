@@ -49,7 +49,7 @@ public class DatabaseConfiguration {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", true);
         properties.put("hibernate.format_sql", true);
-        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;
     }
 
