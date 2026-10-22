@@ -1,7 +1,9 @@
 package com.xworks.inventoryManagement.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -17,6 +19,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 
+    @Autowired
+    Environment environment;
+
     public DatabaseConfiguration(){
         System.out.println("The DatabaseConfiguration is created");
     }
@@ -24,10 +29,10 @@ public class DatabaseConfiguration {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/inventory_system_db");
-        dataSource.setUsername("root");
-        dataSource.setPassword("Akasha@123");
+        dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
+        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
+        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
         return dataSource;
     }
 
@@ -47,9 +52,9 @@ public class DatabaseConfiguration {
     @Bean
     public Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.show_sql", true);
-        properties.put("hibernate.format_sql", true);
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.show_sql", environment.getProperty("spring.jpa.show-sql", "true"));
+        properties.setProperty("hibernate.format_sql", environment.getProperty("spring.jpa.properties.hibernate.format_sql", "true"));
+        properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("spring.jpa.hibernate.ddl-auto", "update"));
         return properties;
     }
 
