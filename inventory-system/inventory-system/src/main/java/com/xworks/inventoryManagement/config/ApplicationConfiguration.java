@@ -24,9 +24,16 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         return viewResolver;
     }
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("/");
     }
+
+
 
 }

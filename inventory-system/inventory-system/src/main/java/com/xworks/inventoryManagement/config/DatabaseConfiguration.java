@@ -66,4 +66,6 @@ public class DatabaseConfiguration {
         return jpaTransactionManager;
     }
 
+
+
 }
