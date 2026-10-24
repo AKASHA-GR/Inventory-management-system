@@ -1,57 +1,116 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Register Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Inventory Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="d-flex justify-content-center align-items-center vh-100">
+<body>
 
-    <form action="registered" method="post" class="w-50 ratio-4x3 border p-4 rounded" onsubmit="return validateForm()">
-        <h1 class="d-flex justify-content-center align-items-center">Sign Up</h1>
-        
-        <div>
-            <label for="firstName" class="form-label">First Name:</label>
-            <input class="form-control " type="text" id="firstName" name="firstName" placeholder="Enter first name" aria-label="First name">
-        </div><br>
-        <div>
-            <label for="lastName" class="form-label">Last Name:</label>
-            <input class="form-control" type="text" id="lastName" name="lastName" placeholder="Enter last name" aria-label="Last name">
-        </div><br>
-        <div>
-            <label for="email" class="form-label">Email:</label>
-            <input class="form-control" type="email" id="email" name="email" placeholder="Enter email" aria-label="Email">
-        </div><br>
-        <div>
-            <label for="phoneNumber" class="form-label">Phone Number:</label>
-            <input class="form-control" type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number" aria-label="Phone number">
-        </div><br>
-        <div>
-            <label for="password" class="form-label">Password:</label>
-            <input class="form-control" type="password" id="password" name="password" placeholder="Enter password" aria-label="Password">
-        </div><br>
-        <div>
-            <label for="confirmPassword" class="form-label">Confirm Password:</label>
-            <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" aria-label="Confirm password">
-        </div><br>
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary w-100">Register</button>
-        </div><br>
-    </form>
-
-    <c:if test="${not empty message}">
-        <div class="alert alert-success">${message}</div>
-    </c:if>
-
-    <c:if test="${not empty validationErrors}">
-        <div class="alert alert-danger">
-            <c:forEach items="${validationErrors}" var="error">
-                <p>${error.defaultMessage}</p>
-            </c:forEach>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.jsp">
+            <img src="images/logo.png" alt="Logo" width="150" height="60" class="d-inline-block align-text-top">
+            Inventory Management
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+            ☰ Menu
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="Register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Login.jsp">Login</a>
+                </li>
+            </ul>
         </div>
-    </c:if>
+    </div>
+</nav>
 
-    <script src="RegisterValidation.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="navbarNavMenuLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="list-unstyled">
+            <li><a href="#" class="text-decoration-none">Dashboard</a></li>
+            <li><a href="#" class="text-decoration-none">Products</a></li>
+            <li><a href="#" class="text-decoration-none">Orders</a></li>
+            <li><a href="#" class="text-decoration-none">Reports</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center">Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    <c:if test="${not empty message}">
+                        <div class="alert alert-success">${message}</div>
+                    </c:if>
+
+                    <c:if test="${not empty validationErrors}">
+                        <div class="alert alert-danger">
+                            <c:forEach items="${validationErrors}" var="error">
+                                <p>${error.defaultMessage}</p>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+
+                    <form action="registered" method="post" onsubmit="return validateForm()">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="mb-0">Already have an account? <a href="Login.jsp">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="RegisterValidation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
