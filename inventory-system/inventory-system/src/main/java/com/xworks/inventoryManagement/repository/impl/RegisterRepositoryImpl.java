@@ -27,4 +27,16 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         }
         return false;
     }
+
+    @Override
+    public boolean emailExist(String email) {
+        try {
+            RegisterEntity entity = (RegisterEntity) entityManager.createNamedQuery("getEmailId", RegisterEntity.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return entity != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

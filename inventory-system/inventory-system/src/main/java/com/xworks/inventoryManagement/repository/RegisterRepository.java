@@ -4,4 +4,5 @@ import com.xworks.inventoryManagement.entity.RegisterEntity;
 
 public interface RegisterRepository {
     public boolean save(RegisterEntity registerEntity);
+    public boolean emailExist(String email);
 }

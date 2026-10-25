@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "Users")
+@NamedQueries(@NamedQuery(name = "getEmailId", query = "select e from RegisterEntity e where e.email = :email"))
 public class RegisterEntity {
 
     @Id

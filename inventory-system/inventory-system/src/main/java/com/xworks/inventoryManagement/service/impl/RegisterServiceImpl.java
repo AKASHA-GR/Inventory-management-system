@@ -38,4 +38,18 @@ public class RegisterServiceImpl implements RegisterService {
         }
         return false;
     }
+
+    @Override
+    public String findEmail(String email) {
+        System.out.println("Invoking findEmail:Service"+email);
+
+        String status = null;
+
+        if(email != null){
+            boolean isCheck = registerRepository.emailExist(email);
+
+            status = (isCheck)? "Email Id Already Exist ":"Email Id id not Exist";
+        }
+        return status;
+    }
 }
