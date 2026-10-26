@@ -81,8 +81,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
-                            <small id="emailMessage"></small>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" onchange="checkEmailExit()" required>
+                            <small id="emailMessage" ></small>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
@@ -110,6 +110,28 @@
         </div>
     </div>
 </div>
+<script>
+    function checkEmailExit(){
+    console.log("");
+
+    let emailId = document.getElementById("email").value;
+    console.log(emailId);
+
+    const request = new XMLHttpRequest();
+    console.log(request);
+
+    request.open("GET", "/InventoryManagement/checkEmailExit/"+emailId);
+    request.send();
+    console.log("Register is sent to back end");
+
+    request.onload = function(){
+    console.log("Response is received from back end ");
+    console.log(request.responseText);
+
+        document.getElementById("emailMessage").innerText = request.responseText;
+    }
+    }
+</script>
 
 <script src="RegisterValidation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

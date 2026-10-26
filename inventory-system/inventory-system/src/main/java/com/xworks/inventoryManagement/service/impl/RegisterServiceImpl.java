@@ -49,6 +49,7 @@ public class RegisterServiceImpl implements RegisterService {
             boolean isCheck = registerRepository.emailExist(email);
 
             status = (isCheck)? "Email Id Already Exist ":"Email Id id not Exist";
+
         }
         return status;
     }
