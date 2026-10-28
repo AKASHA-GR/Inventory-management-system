@@ -26,7 +26,7 @@
                     <a class="nav-link active" href="Register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Login.jsp">Login</a>
+                    <a class="nav-link" href="Login">Login</a>
                 </li>
             </ul>
         </div>
@@ -104,7 +104,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <p class="mb-0">Already have an account? <a href="Login.jsp">Login here</a></p>
+                    <p class="mb-0">Already have an account? <a href="Login">Login here</a></p>
                 </div>
             </div>
         </div>

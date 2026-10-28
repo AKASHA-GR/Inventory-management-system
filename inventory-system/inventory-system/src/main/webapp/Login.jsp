@@ -26,7 +26,7 @@
                     <a class="nav-link" href="Register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="Login.jsp">Login</a>
+                    <a class="nav-link active" href="Login">Login</a>
                 </li>
             </ul>
         </div>
