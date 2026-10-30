@@ -5,26 +5,30 @@ import com.xworks.inventoryManagement.repository.LoginRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Repository
 public class LoginRepositoryImpl implements LoginRepository {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     public LoginRepositoryImpl() {
         System.out.println("The LoginRepositoryImpl is created.");
     }
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     public RegisterEntity findByEmail(String email) {
+
         try {
-            RegisterEntity entity = (RegisterEntity) entityManager.createNamedQuery("getEmailId", RegisterEntity.class)
+            return entityManager
+                    .createNamedQuery("getEmailId", RegisterEntity.class)
                     .setParameter("email", email)
                     .getSingleResult();
-            return entity;
-        } catch (Exception e) {
+
+        } catch (NoResultException e) {
+            // No registered user exists with this email.
             return null;
         }
     }

@@ -85,40 +85,55 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        
-        const email = document.getElementById('email').value;
+
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
-        
-        const loginData = {
-            email: email,
-            password: password
-        };
-        
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginData)
-        })
-        .then(response => response.text())
-        .then(data => {
-            const messageDiv = document.getElementById('loginMessage');
-            if (data === 'Login Successful') {
-                messageDiv.innerHTML = '<div class="alert alert-success">' + data + '</div>';
-                setTimeout(() => {
+        const messageDiv = document.getElementById('loginMessage');
+
+        messageDiv.innerHTML = '';
+
+        try {
+            const response = await fetch('${pageContext.request.contextPath}/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.text();
+
+            if (!response.ok) {
+                messageDiv.textContent = 'Login request failed. Please try again.';
+                messageDiv.className = 'alert alert-danger mt-3';
+                return;
+            }
+
+            if (data.trim() === 'Login Successful') {
+                messageDiv.textContent = 'Login successful! Redirecting...';
+                messageDiv.className = 'alert alert-success mt-3';
+
+                setTimeout(function () {
                     window.location.href = 'index.jsp';
                 }, 1000);
+
             } else {
-                messageDiv.innerHTML = '<div class="alert alert-danger">' + data + '</div>';
+                messageDiv.textContent = 'Invalid email or password.';
+                messageDiv.className = 'alert alert-danger mt-3';
             }
-        })
-        .catch(error => {
-            const messageDiv = document.getElementById('loginMessage');
-            messageDiv.innerHTML = '<div class="alert alert-danger">Error: ' + error + '</div>';
-        });
+
+        } catch (error) {
+            messageDiv.textContent =
+                'Unable to connect to the server. Please try again.';
+            messageDiv.className = 'alert alert-danger mt-3';
+
+            console.error('Login request failed:', error);
+        }
     });
 </script>
 </body>
