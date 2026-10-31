@@ -6,6 +6,12 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
+
+
+@NamedQueries(
+        @NamedQuery(name = "findAll",query = "SELECT p FROM ProductEntity p")
+)
+
 @Table(name = "products")
 public class ProductEntity {
 
