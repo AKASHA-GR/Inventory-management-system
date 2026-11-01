@@ -34,11 +34,18 @@ public class ProductRestController {
         return "Product";
     }
 
+    //Display add product form
+    @GetMapping("AddProduct")
+    public String showAddProductForm(Model model){
+        model.addAttribute("productDTO", new ProductDTO());
+        return "AddProduct";
+    }
+
     //add product
     @PostMapping("SaveProduct")
     public String saveProduct(@Valid ProductDTO productDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
-            model.addAttribute(("validationErrors", bindingResult.getAllErrors()));
+            model.addAttribute("validationErrors", bindingResult.getAllErrors());
             return "AddProduct";
         }
 
@@ -53,8 +60,45 @@ public class ProductRestController {
     }
 
 
-    //edit the product form
+    //Display edit the product form
+    @GetMapping("EditProduct")
     public String showEditProductForm(@RequestParam("id") Integer id,Model model){
+        ProductDTO productDTO = productService.findById(id);
+        if(productDTO != null){
+            model.addAttribute("productDTO",productDTO);
+            return  "EditProduct";
+        }
+        return "redirect:/Products";
+    }
+
+
+    //Handle edit product form submission
+    @PostMapping("UpdateProduct")
+    public String updateProduct(@Valid ProductDTO productDTO, BindingResult bindingResult,Model model, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("validationErrors",bindingResult.getAllErrors());
+            return "EditProduct";
+        }
+
+        boolean updated = productService.update(productDTO);
+        if(updated){
+            redirectAttributes.addFlashAttribute("message", "Product updated successfully");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Failed to update product");
+        }
+        return "redirect:/Products";
+    }
+
+
+    // Delete product
+    @GetMapping("DeleteProduct")
+    public String deleteProduct(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        boolean deleted = productService.deleteById(id);
+        if (deleted) {
+            redirectAttributes.addFlashAttribute("message", "Product deleted successfully");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Failed to delete product");
+        }
         return "redirect:/Products";
     }
 
