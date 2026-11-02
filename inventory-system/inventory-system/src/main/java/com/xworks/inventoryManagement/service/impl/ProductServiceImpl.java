@@ -22,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean save(ProductDTO productDTO) {
+        System.out.println("The save method is executed on ProductServiceImpl.");
         ProductEntity productEntity = new ProductEntity();
         BeanUtils.copyProperties(productDTO,productEntity);
         ProductEntity savedEntity = productRepository.save(productEntity);
