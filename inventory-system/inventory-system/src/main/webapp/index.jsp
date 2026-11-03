@@ -262,7 +262,7 @@
 
         <nav aria-label="Main menu">
 
-            <a href="index.html" class="sidebar-link">
+            <a href="Dashboard" class="sidebar-link">
                 🏠 Dashboard
             </a>
 

@@ -24,6 +24,12 @@
                     <a class="nav-link" href="Products">Products</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="Orders">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Reports">Reports</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="Login">Login</a>
                 </li>
             </ul>
