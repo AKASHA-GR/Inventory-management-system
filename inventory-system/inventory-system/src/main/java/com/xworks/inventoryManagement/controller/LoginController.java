@@ -14,6 +14,7 @@ public class LoginController {
 
     @GetMapping("Login")
     public String openLogin(){
+        System.out.println("The login page is open.");
         return "Login";
     }
 }
