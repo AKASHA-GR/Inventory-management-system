@@ -40,10 +40,10 @@
     </div>
     <div class="offcanvas-body">
         <ul class="list-unstyled">
-            <li><a href="#" class="text-decoration-none">Dashboard</a></li>
-            <li><a href="#" class="text-decoration-none">Products</a></li>
-            <li><a href="#" class="text-decoration-none">Orders</a></li>
-            <li><a href="#" class="text-decoration-none">Reports</a></li>
+            <li><a href="Dashboard" class="text-decoration-none">Dashboard</a></li>
+            <li><a href="Products" class="text-decoration-none">Products</a></li>
+            <li><a href="Orders" class="text-decoration-none">Orders</a></li>
+            <li><a href="Reports" class="text-decoration-none">Reports</a></li>
         </ul>
     </div>
 </div>

@@ -82,7 +82,7 @@
                     <td>${order.shippingAddress}</td>
                     <td>$${order.totalAmount}</td>
                     <td>
-                        <span class="badge ${order.status == 'Completed' ? 'bg-success' : order.status == 'Pending' ? 'bg-warning' : 'bg-info'}">
+                        <span class="badge ${order.status == 'Delivered' ? 'bg-success' : order.status == 'Pending' ? 'bg-warning' : 'bg-info'}">
                             ${order.status}
                         </span>
                     </td>

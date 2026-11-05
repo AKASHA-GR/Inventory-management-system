@@ -113,7 +113,7 @@
                         </c:if>
 
                         <div class="d-flex justify-content-between">
-                            <a href="OrderList" class="btn btn-secondary">Cancel</a>
+                            <a href="Orders" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary">Update Order</button>
                         </div>
                     </form>

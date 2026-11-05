@@ -7,43 +7,222 @@
     <title>Dashboard - Inventory Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
         .stat-card {
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
         }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+        
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         }
+        
+        .stat-card-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .stat-card-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .stat-card-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .stat-card-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .stat-card-secondary {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+        }
+        
+        .stat-card-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        }
+        
+        .stat-card-dark {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+        }
+        
         .stat-icon {
-            font-size: 2.5rem;
-            opacity: 0.8;
+            font-size: 3rem;
+            opacity: 0.9;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            animation: float 3s ease-in-out infinite;
         }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.95;
+        }
+        
+        .stat-link {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        
+        .stat-link:hover {
+            transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
         .quick-action-card {
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
             text-decoration: none;
             color: inherit;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid transparent;
         }
+        
         .quick-action-card:hover {
-            transform: translateY(-3px);
-            text-decoration: none;
-            color: inherit;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
         }
+        
+        .quick-action-icon {
+            font-size: 2.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
         .recent-item {
-            border-left: 3px solid #007bff;
-            padding-left: 12px;
-            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+            padding-left: 16px;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, rgba(102,126,234,0.05) 0%, transparent 100%);
+            padding: 12px 16px;
+            border-radius: 0 12px 12px 0;
+            transition: all 0.2s ease;
         }
+        
+        .recent-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(90deg, rgba(102,126,234,0.1) 0%, transparent 100%);
+        }
+        
         .recent-item.low-stock {
             border-left-color: #ffc107;
+            background: linear-gradient(90deg, rgba(255,193,7,0.05) 0%, transparent 100%);
         }
+        
+        .recent-item.low-stock:hover {
+            background: linear-gradient(90deg, rgba(255,193,7,0.1) 0%, transparent 100%);
+        }
+        
         .recent-item.out-of-stock {
             border-left-color: #dc3545;
+            background: linear-gradient(90deg, rgba(220,53,69,0.05) 0%, transparent 100%);
+        }
+        
+        .recent-item.out-of-stock:hover {
+            background: linear-gradient(90deg, rgba(220,53,69,0.1) 0%, transparent 100%);
+        }
+        
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border: none;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .card-body {
+            padding: 24px;
+        }
+        
+        .status-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+        
+        .status-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h4 {
+            font-weight: 600;
+            color: #333;
         }
     </style>
 </head>
@@ -86,35 +265,35 @@
     <!-- Stats Cards -->
     <div class="row g-4 mb-4">
         <div class="col-12 col-md-6 col-lg-3">
-            <div class="stat-card bg-primary text-white p-4">
+            <div class="stat-card stat-card-primary text-white p-4">
                 <div class="stat-icon">📦</div>
-                <h5 class="mt-2">Total Products</h5>
-                <h2>${totalProducts}</h2>
-                <a href="Products" class="text-white text-decoration-none">View All →</a>
+                <h5 class="stat-label mt-2">Total Products</h5>
+                <h2 class="stat-number">${totalProducts}</h2>
+                <a href="Products" class="stat-link text-white text-decoration-none">View All →</a>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-3">
-            <div class="stat-card bg-success text-white p-4">
+            <div class="stat-card stat-card-success text-white p-4">
                 <div class="stat-icon">🛒</div>
-                <h5 class="mt-2">Total Orders</h5>
-                <h2>${totalOrders}</h2>
-                <a href="Orders" class="text-white text-decoration-none">View All →</a>
+                <h5 class="stat-label mt-2">Total Orders</h5>
+                <h2 class="stat-number">${totalOrders}</h2>
+                <a href="Orders" class="stat-link text-white text-decoration-none">View All →</a>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-3">
-            <div class="stat-card bg-info text-white p-4">
+            <div class="stat-card stat-card-info text-white p-4">
                 <div class="stat-icon">💰</div>
-                <h5 class="mt-2">Total Revenue</h5>
-                <h4>$${totalRevenue}</h4>
-                <a href="Reports" class="text-white text-decoration-none">View Reports →</a>
+                <h5 class="stat-label mt-2">Total Revenue</h5>
+                <h2 class="stat-number">$${totalRevenue}</h2>
+                <a href="Reports" class="stat-link text-white text-decoration-none">View Reports →</a>
             </div>
         </div>
         <div class="col-12 col-md-6 col-lg-3">
-            <div class="stat-card bg-warning text-dark p-4">
+            <div class="stat-card stat-card-warning text-white p-4">
                 <div class="stat-icon">⚠️</div>
-                <h5 class="mt-2">Low Stock</h5>
-                <h2>${lowStockCount}</h2>
-                <a href="Products" class="text-dark text-decoration-none">Manage →</a>
+                <h5 class="stat-label mt-2">Low Stock</h5>
+                <h2 class="stat-number">${lowStockCount}</h2>
+                <a href="Products" class="stat-link text-white text-decoration-none">Manage →</a>
             </div>
         </div>
     </div>
@@ -122,24 +301,24 @@
     <!-- Additional Stats -->
     <div class="row g-4 mb-4">
         <div class="col-12 col-md-4">
-            <div class="stat-card bg-secondary text-white p-4">
+            <div class="stat-card stat-card-secondary text-white p-4">
                 <div class="stat-icon">🏷️</div>
-                <h5 class="mt-2">Categories</h5>
-                <h3>${totalCategories}</h3>
+                <h5 class="stat-label mt-2">Categories</h5>
+                <h2 class="stat-number">${totalCategories}</h2>
             </div>
         </div>
         <div class="col-12 col-md-4">
-            <div class="stat-card bg-danger text-white p-4">
+            <div class="stat-card stat-card-danger text-white p-4">
                 <div class="stat-icon">🚫</div>
-                <h5 class="mt-2">Out of Stock</h5>
-                <h3>${outOfStockCount}</h3>
+                <h5 class="stat-label mt-2">Out of Stock</h5>
+                <h2 class="stat-number">${outOfStockCount}</h2>
             </div>
         </div>
         <div class="col-12 col-md-4">
-            <div class="stat-card bg-dark text-white p-4">
+            <div class="stat-card stat-card-dark text-white p-4">
                 <div class="stat-icon">💵</div>
-                <h5 class="mt-2">Inventory Value</h5>
-                <h4>$${inventoryValue}</h4>
+                <h5 class="stat-label mt-2">Inventory Value</h5>
+                <h2 class="stat-number">$${inventoryValue}</h2>
             </div>
         </div>
     </div>
@@ -151,28 +330,28 @@
         </div>
         <div class="col-12 col-md-3">
             <a href="AddProduct" class="quick-action-card card p-4 text-center">
-                <div class="stat-icon">➕</div>
+                <div class="quick-action-icon">➕</div>
                 <h5 class="mt-2">Add Product</h5>
                 <p class="text-muted small">Create new product</p>
             </a>
         </div>
         <div class="col-12 col-md-3">
             <a href="AddOrder" class="quick-action-card card p-4 text-center">
-                <div class="stat-icon">🛒</div>
+                <div class="quick-action-icon">🛒</div>
                 <h5 class="mt-2">New Order</h5>
                 <p class="text-muted small">Create new order</p>
             </a>
         </div>
         <div class="col-12 col-md-3">
             <a href="Products" class="quick-action-card card p-4 text-center">
-                <div class="stat-icon">📦</div>
+                <div class="quick-action-icon">📦</div>
                 <h5 class="mt-2">Manage Products</h5>
                 <p class="text-muted small">View and edit products</p>
             </a>
         </div>
         <div class="col-12 col-md-3">
             <a href="Reports" class="quick-action-card card p-4 text-center">
-                <div class="stat-icon">📊</div>
+                <div class="quick-action-icon">📊</div>
                 <h5 class="mt-2">View Reports</h5>
                 <p class="text-muted small">Analytics and insights</p>
             </a>
@@ -256,32 +435,32 @@
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-6 col-md-2 mb-3">
-                            <div class="p-3 bg-light rounded">
-                                <h4 class="text-warning">${pendingOrders}</h4>
+                            <div class="status-card text-center">
+                                <h4 class="status-number text-warning">${pendingOrders}</h4>
                                 <small class="text-muted">Pending</small>
                             </div>
                         </div>
                         <div class="col-6 col-md-2 mb-3">
-                            <div class="p-3 bg-light rounded">
-                                <h4 class="text-info">${processingOrders}</h4>
+                            <div class="status-card text-center">
+                                <h4 class="status-number text-info">${processingOrders}</h4>
                                 <small class="text-muted">Processing</small>
                             </div>
                         </div>
                         <div class="col-6 col-md-2 mb-3">
-                            <div class="p-3 bg-light rounded">
-                                <h4 class="text-primary">${shippedOrders}</h4>
+                            <div class="status-card text-center">
+                                <h4 class="status-number text-primary">${shippedOrders}</h4>
                                 <small class="text-muted">Shipped</small>
                             </div>
                         </div>
                         <div class="col-6 col-md-2 mb-3">
-                            <div class="p-3 bg-light rounded">
-                                <h4 class="text-success">${deliveredOrders}</h4>
+                            <div class="status-card text-center">
+                                <h4 class="status-number text-success">${deliveredOrders}</h4>
                                 <small class="text-muted">Delivered</small>
                             </div>
                         </div>
                         <div class="col-6 col-md-2 mb-3">
-                            <div class="p-3 bg-light rounded">
-                                <h4 class="text-danger">${cancelledOrders}</h4>
+                            <div class="status-card text-center">
+                                <h4 class="status-number text-danger">${cancelledOrders}</h4>
                                 <small class="text-muted">Cancelled</small>
                             </div>
                         </div>
