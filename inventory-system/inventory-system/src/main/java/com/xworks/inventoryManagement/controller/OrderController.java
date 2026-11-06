@@ -14,6 +14,7 @@ public class OrderController {
 
     @GetMapping("Orders")
     public String openOrders(){
+        System.out.println("The openOrder  is created");
         return "redirect:/OrderList";
     }
 }
