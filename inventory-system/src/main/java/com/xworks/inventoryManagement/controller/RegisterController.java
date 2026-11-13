@@ -25,7 +25,7 @@ public class RegisterController {
 
     @PostMapping("register")
     public String register(Model model, @Valid RegisterDTO registerDTO, BindingResult bindingResult){
-         System.out.println("The Register is created");    
+          
         return "Register";
     }
 }
