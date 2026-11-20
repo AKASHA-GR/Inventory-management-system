@@ -120,7 +120,7 @@
     const request = new XMLHttpRequest();
     console.log(request);
 
-    request.open("GET", "/InventoryManagement/checkEmailExit/"+emailId);
+    request.open("GET", "${pageContext.request.contextPath}/checkEmailExit/"+emailId);
     request.send();
     console.log("Register is sent to back end");
 
